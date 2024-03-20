@@ -16,7 +16,7 @@ class Cryptography {
     const cipher = crypto.createCipheriv(
       this.algorithm,
       Buffer.from(this.key),
-      iv
+      iv,
     );
     let encrypted = cipher.update(text, "utf8", "hex");
     encrypted += cipher.final("hex");
@@ -29,7 +29,7 @@ class Cryptography {
     const decipher = crypto.createDecipheriv(
       this.algorithm,
       Buffer.from(this.key),
-      iv
+      iv,
     );
     let decrypted = decipher.update(encryptedText, "hex", "utf8");
     decrypted += decipher.final("utf8");
