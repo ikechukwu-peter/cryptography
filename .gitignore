@@ -1,0 +1,12 @@
+# node_modules
+node_modules
+
+# env
+.env
+
+
+# build
+build
+
+# lock
+package-lock.json
