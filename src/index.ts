@@ -3,6 +3,7 @@ import { cryptographySchema } from "./utility/validations/cryptographySchema";
 import Cryptography from "./utility/cryptography";
 
 const app: Express = express();
+app.use(express.json({ limit: "10kb" }));
 const port = process.env.PORT != null || 3000;
 
 app.get("/decrypt", (req: Request, res: Response) => {
@@ -15,6 +16,7 @@ app.get("/decrypt", (req: Request, res: Response) => {
   }
 
   const { text, key } = req.query;
+
   const cryptoService = new Cryptography(String(key));
   try {
     const decryptedText = cryptoService.decrypt(String(text));
