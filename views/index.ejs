@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../public/stylesheets/style.css" />
+    <title>Cryptography App</title>
+  </head>
+  <body>
+    <h1 class="text-lime-400">Ikechukwue Peter's Cryptography App</h1>
+    <!-- Encryption Section -->
+    <section>
+      <h2>Encrypt Text</h2>
+      <form id="encryptionForm">
+        <label for="encryptText">Text:</label>
+        <input type="text" id="encryptText" name="text" required /><br />
+        <label for="encryptKey">Key (64 hexadecimal characters):</label>
+        <input
+          type="text"
+          id="encryptKey"
+          name="key"
+          pattern="[0-9a-fA-F]{64}"
+          title="Key must be 64 hexadecimal characters"
+          required
+        /><br />
+        <button type="submit">Encrypt</button>
+      </form>
+      <!-- Render the response back here -->
+      <div id="encryptedText"></div>
+      <div id="encryptedError"></div>
+    </section>
+    <section>
+      <h2>Decrypt Text</h2>
+      <form id="decryptionForm">
+        <label for="decryptText">Text:</label>
+        <input type="text" id="decryptText" name="text" required /><br />
+        <label for="decryptKey">Key (64 hexadecimal characters):</label>
+        <input
+          type="text"
+          id="decryptKey"
+          name="key"
+          pattern="[0-9a-fA-F]{64}"
+          title="Key must be 64 hexadecimal characters"
+          required
+        /><br />
+        <button type="submit">Decrypt</button>
+      </form>
+      <!-- Render the response back here -->
+      <div id="decryptedText"></div>
+      <div id="decryptedError"></div>
+    </section>
+    <script>
+      // Function to handle form submission for encryption
+      document
+        .getElementById("encryptionForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent default form submission
+
+          // Gather form data
+          const formData = new FormData(this);
+
+          // Convert form data to JSON object
+          const jsonObject = {};
+          formData.forEach(function (value, key) {
+            jsonObject[key] = value;
+          });
+
+          // Make AJAX request to encrypt the text
+          fetch("/encrypt", {
+            method: "POST",
+            body: JSON.stringify(jsonObject),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.status === "failed") {
+                document.getElementById("encryptedText").style.display = "none";
+                document.getElementById("encryptedError").innerHTML =
+                  "<p>Error: " + data.error + "</p>";
+              } else {
+                document.getElementById("encryptedError").style.display =
+                  "none";
+                // Display the encrypted text
+                document.getElementById("encryptedText").innerHTML =
+                  "<p>Encrypted Text: " + data.data + "</p>";
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+        });
+
+      // Function to handle form submission for decryption
+      document
+        .getElementById("decryptionForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent default form submission
+
+          // Gather form data
+          const formData = new FormData(this);
+
+          // Convert form data to JSON object
+          const jsonObject = {};
+          formData.forEach(function (value, key) {
+            jsonObject[key] = value;
+          });
+
+          // Make AJAX request to decrypt the text
+          fetch("/decrypt", {
+            method: "POST",
+            body: JSON.stringify(jsonObject),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log({ data });
+
+              if (data.status === "failed") {
+                document.getElementById("decryptedError").innerHTML =
+                  "<p>Error: " + data.error + "</p>";
+                // document.getElementById("decryptedText").style.display = "none";
+              } else {
+                // Display the decrypted text
+                document.getElementById("decryptedError").style.display =
+                  "none";
+                document.getElementById("decryptedText").innerHTML =
+                  "<p>Decrypted Text: " + data.data + "</p>";
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert(error);
+            });
+        });
+    </script>
+  </body>
+</html>
