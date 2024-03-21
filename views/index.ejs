@@ -147,6 +147,11 @@
             jsonObject[key] = value;
           });
 
+          // Disable the submit button and change its text to "Encrypting"
+          const encryptButton = this.querySelector('button[type="submit"]');
+          encryptButton.disabled = true;
+          encryptButton.textContent = "Encrypting...";
+
           // Make AJAX request to encrypt the text
           fetch("/encrypt", {
             method: "POST",
@@ -170,6 +175,11 @@
             })
             .catch((error) => {
               console.error("Error:", error);
+            })
+            .finally(() => {
+              // Re-enable the submit button and change its text back to "Encrypt"
+              encryptButton.disabled = false;
+              encryptButton.textContent = "Encrypt";
             });
         });
 
@@ -187,6 +197,11 @@
           formData.forEach(function (value, key) {
             jsonObject[key] = value;
           });
+
+          // Disable the submit button and change its text to "Decrypting"
+          const decryptButton = this.querySelector('button[type="submit"]');
+          decryptButton.disabled = true;
+          decryptButton.textContent = "Decrypting...";
 
           // Make AJAX request to decrypt the text
           fetch("/decrypt", {
@@ -213,6 +228,11 @@
             .catch((error) => {
               console.error("Error:", error);
               alert(error);
+            })
+            .finally(() => {
+              // Re-enable the submit button and change its text back to "Encrypt"
+              decryptButton.disabled = false;
+              decryptButton.textContent = "Decrypt";
             });
         });
     </script>
