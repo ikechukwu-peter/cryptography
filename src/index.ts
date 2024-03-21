@@ -28,7 +28,7 @@ app.use(compression());
 //serve as a limiter for accessing our api
 app.use(apiLimiter);
 
-const port = process.env.PORT != null || 3000;
+const port = process.env.PORT != null ? process.env.PORT : 3000;
 
 app.get("/", (_, res: Response) => {
   res.render("index");
