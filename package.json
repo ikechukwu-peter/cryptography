@@ -1,5 +1,5 @@
 {
-  "name": "cryptography-project",
+  "name": "cryptography",
   "version": "1.0.0",
   "description": "A project to demonstrate cryptography",
   "main": "index.js",
