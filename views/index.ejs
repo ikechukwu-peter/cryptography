@@ -3,11 +3,93 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../public/stylesheets/style.css" />
-    <title>Cryptography App</title>
+    <title>Ikechukwu Peter's Cryptography App</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f3f4f6;
+        margin: 0;
+        padding: 0;
+      }
+
+      h1,
+      h2 {
+        color: #4b5563;
+      }
+
+      .title {
+        padding: 2rem;
+      }
+      section {
+        background-color: #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: #4b5563;
+      }
+
+      input[type="text"] {
+        width: 50%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #cbd5e0;
+        border-radius: 4px;
+        margin-bottom: 12px;
+      }
+
+      button[type="submit"] {
+        background-color: #4c51bf;
+        color: #ffffff;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #4338ca;
+      }
+
+      .error-message {
+        color: #ef4444;
+        margin-top: 6px;
+      }
+
+      /* Responsive styles */
+      @media screen and (max-width: 768px) {
+        section {
+          padding: 15px;
+        }
+        input[type="text"],
+        button[type="submit"] {
+          width: calc(100% - 20px);
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        h1 {
+          font-size: 24px;
+        }
+        h2 {
+          font-size: 20px;
+        }
+        input[type="text"],
+        button[type="submit"] {
+          font-size: 14px;
+        }
+      }
+    </style>
   </head>
   <body>
-    <h1 class="text-lime-400">Ikechukwue Peter's Cryptography App</h1>
+    <h1 class="title">Ikechukwu Peter's Cryptography App</h1>
     <!-- Encryption Section -->
     <section>
       <h2>Encrypt Text</h2>
@@ -76,12 +158,11 @@
             .then((response) => response.json())
             .then((data) => {
               if (data.status === "failed") {
-                document.getElementById("encryptedText").style.display = "none";
                 document.getElementById("encryptedError").innerHTML =
-                  "<p>Error: " + data.error + "</p>";
+                  `<p class="error-message">Error: ${data.error} </p>`;
+                document.getElementById("encryptedText").innerHTML = ""; // Clear encrypted text
               } else {
-                document.getElementById("encryptedError").style.display =
-                  "none";
+                document.getElementById("encryptedError").innerHTML = ""; // Clear error message
                 // Display the encrypted text
                 document.getElementById("encryptedText").innerHTML =
                   "<p>Encrypted Text: " + data.data + "</p>";
@@ -117,16 +198,14 @@
           })
             .then((response) => response.json())
             .then((data) => {
-              console.log({ data });
-
               if (data.status === "failed") {
                 document.getElementById("decryptedError").innerHTML =
-                  "<p>Error: " + data.error + "</p>";
-                // document.getElementById("decryptedText").style.display = "none";
+                  `<p class="error-message">Error: ${data.error} </p>`;
+
+                document.getElementById("decryptedText").innerHTML = ""; // Clear decrypted text
               } else {
+                document.getElementById("decryptedError").innerHTML = ""; // Clear error message
                 // Display the decrypted text
-                document.getElementById("decryptedError").style.display =
-                  "none";
                 document.getElementById("decryptedText").innerHTML =
                   "<p>Decrypted Text: " + data.data + "</p>";
               }
