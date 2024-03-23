@@ -4,7 +4,6 @@ import Cryptography from "./utility/cryptography";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import compression from "compression";
-import path from "path";
 
 const apiLimiter = rateLimit({
   windowMs: 10 * 60 * 1000, // 10 minutes

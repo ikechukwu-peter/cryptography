@@ -11,6 +11,7 @@ A project to demonstrate cryptography
 ![screenshot](./public/noun_cryptography_3.jpg)
 
 ![screenshot](./public/noun_cryptography_5.jpg)
+![screenshot](./public/noun_cryptography_6.jpg)
 
 ## Table of Contents
 
